@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<GraceChurchKelseyvilleAwana.Models.Student>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Students";
 }
 
-<h2>Index</h2>
+<h2>Student Listing</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -17,10 +17,9 @@
         <th>
             @Html.DisplayNameFor(model => model.LastName)
         </th>
-        <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.OrderByDescending(x => x.LastName).ThenBy(x => x.FirstName)) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.FirstName)
