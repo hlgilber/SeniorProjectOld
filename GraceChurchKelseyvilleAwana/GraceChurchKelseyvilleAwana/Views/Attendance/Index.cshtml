@@ -1,0 +1,35 @@
+﻿@model IEnumerable<GraceChurchKelseyvilleAwana.Models.Student>
+    
+@{
+    ViewBag.Title = "Attendance";
+}
+
+<h2>Attendance</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BothNames)
+        </th>
+        @foreach (var item in Model.ElementAt(0).Attendances.OrderByDescending(x => x.AttendanceDate)) {
+            <th>
+                @Html.DisplayFor(modelItem => item.AttendanceDate)
+            </th>
+        }
+    </tr>
+    @foreach (var item in Model.OrderBy(x => x.LastName).ThenBy(x => x.FirstName))
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BothNames)
+            </td>
+            @foreach(var attendance in item.Attendances.OrderByDescending(x => x.AttendanceDate))
+            { 
+                <td>
+                    @Html.CheckBoxFor(modelItem => attendance.Attended)
+                    <input type="checkbox" class="checkbox-inline"/>
+                </td>
+            }
+        </tr>
+    }
+</table>

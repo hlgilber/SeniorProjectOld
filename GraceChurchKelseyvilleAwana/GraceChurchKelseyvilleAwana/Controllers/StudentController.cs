@@ -17,6 +17,8 @@ namespace GraceChurchKelseyvilleAwana.Controllers
         // GET: /Student/
         public ActionResult Index()
         {
+            //If not logged in do this:
+            //return RedirectToAction("Index", "Home");
             return View(db.Students.ToList());
         }
 
@@ -46,7 +48,7 @@ namespace GraceChurchKelseyvilleAwana.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,FirstName,LastName")] Student student)
+        public ActionResult Create([Bind(Include="StudentID,FirstName,LastName,BirthDate,Grade,Gender,MedicalInformation")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +80,7 @@ namespace GraceChurchKelseyvilleAwana.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,FirstName,LastName")] Student student)
+        public ActionResult Edit([Bind(Include="StudentID,FirstName,LastName,BirthDate,Grade,Gender,MedicalInformation")] Student student)
         {
             if (ModelState.IsValid)
             {

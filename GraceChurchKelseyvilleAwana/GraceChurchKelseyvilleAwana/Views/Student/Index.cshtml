@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<GraceChurchKelseyvilleAwana.Models.Student>
 
 @{
-    ViewBag.Title = "Students";
+    ViewBag.Title = "Index";
 }
 
-<h2>Student Listing</h2>
+<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -17,9 +17,25 @@
         <th>
             @Html.DisplayNameFor(model => model.LastName)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Age)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Grade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MedicalInformation)
+        </th>
+        <th></th>
     </tr>
 
-@foreach (var item in Model.OrderByDescending(x => x.LastName).ThenBy(x => x.FirstName)) {
+@foreach (var item in Model.OrderBy(x => x.LastName).ThenBy(x => x.FirstName)) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.FirstName)
@@ -28,9 +44,24 @@
             @Html.DisplayFor(modelItem => item.LastName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.DisplayFor(modelItem => item.BirthDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Age)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Grade)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MedicalInformation)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.StudentID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.StudentID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.StudentID })
         </td>
     </tr>
 }
