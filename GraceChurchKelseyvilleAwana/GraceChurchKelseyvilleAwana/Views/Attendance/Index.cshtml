@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GraceChurchKelseyvilleAwana.Models.Student>
+﻿@model GraceChurchKelseyvilleAwana.Models.AttendanceViewModel
     
 @{
     ViewBag.Title = "Attendance";
@@ -6,30 +6,41 @@
 
 <h2>Attendance</h2>
 
+@using (Html.BeginForm())
+{
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.BothNames)
+            @Html.DisplayNameFor(model => model.Students.ElementAt(0).BothNames)
         </th>
-        @foreach (var item in Model.ElementAt(0).Attendances.OrderByDescending(x => x.AttendanceDate)) {
+        @foreach (var item in Model.Students.ElementAt(0).Attendances.OrderByDescending(x => x.AttendanceDate)) {
             <th>
                 @Html.DisplayFor(modelItem => item.AttendanceDate)
             </th>
         }
     </tr>
-    @foreach (var item in Model.OrderBy(x => x.LastName).ThenBy(x => x.FirstName))
+    @foreach (var student in Model.Students.OrderBy(x => x.LastName).ThenBy(x => x.FirstName))
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.BothNames)
+                @Html.DisplayFor(modelItem => student.BothNames)
             </td>
-            @foreach(var attendance in item.Attendances.OrderByDescending(x => x.AttendanceDate))
-            { 
+            @foreach (var attendance in student.Attendances.OrderByDescending(x => x.AttendanceDate))
+            {
+                @*int j = Model.Students.ElementAt(i).Attendances.ToList().IndexOf(attendance);
+                <td>
+                    <input type="checkbox" checked="@Model.Students[i].Attendances.ElementAt(j).Attended" Name="attendances" value=@Model.Students[i].Attendances.ElementAt(j).Attended/>
+                </td>*@
                 <td>
                     @Html.CheckBoxFor(modelItem => attendance.Attended)
-                    <input type="checkbox" class="checkbox-inline"/>
                 </td>
+                @*int j = Model.Students.ElementAt(i).Attendances.ToList().IndexOf(attendance);*@
+                @*<td>
+                    @Html.CheckBoxFor(modelItem => modelItem.Students[i].Attendances.ElementAt(j).Attended)
+                </td>*@
             }
         </tr>
     }
 </table>
+    <input type="submit" value="Save" class="btn btn-default" />
+}

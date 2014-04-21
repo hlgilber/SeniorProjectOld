@@ -38,7 +38,6 @@ namespace GraceChurchKelseyvilleAwana.Models
             }
         }
 
-        [DataType (DataType.Date)]
         [DisplayFormat (DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> BirthDate { get; set; }
 

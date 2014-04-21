@@ -14,6 +14,7 @@ namespace GraceChurchKelseyvilleAwana.Controllers
         private DateTime _lastAwanaDate;
         private DateTime _lastDateToShow;
         private Entities db = new Entities();
+//        private List<Student> students;
 
         //
         // GET: /Attendance/
@@ -24,13 +25,42 @@ namespace GraceChurchKelseyvilleAwana.Controllers
 
             var attendances = db.Attendances.ToList();
             var students = StudentsUserHasAccessTo(null);
-            if(GenerateAttendancesIfNeeded(_lastDateToShow, _lastAwanaDate, 
-                students, attendances))
-            {
-                attendances = db.Attendances.ToList();
-            }
+            GenerateAttendancesIfNeeded(_lastDateToShow, _lastAwanaDate, students, attendances);
 
-            return View(students);
+            return View(new AttendanceViewModel { Students = students });
+        }
+
+        //[HttpPost]
+        //public ActionResult index(AttendanceViewModel vm)
+        //{
+
+        //    db.SaveChanges();
+        //    return RedirectToAction("index");
+        //}
+
+        [HttpPost]
+        public ActionResult Index(FormCollection form)
+        {
+            var e = form.GetValue("attendances");
+            var f = form.GetValues(0);
+            var students = db.Students.OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
+            var i = 0;
+
+            foreach(var student in students)
+            {
+                foreach(var attendance in student.Attendances.OrderByDescending(a => a.AttendanceDate))
+                {
+                    var attended = bool.Parse(f.ElementAt(i++));
+                    if (attended)
+                    {
+                        i++;
+                    }
+                    attendance.Attended = attended;
+                }
+            }
+            db.SaveChanges();
+
+            return RedirectToAction("index");
         }
 
         public DateTime LastAwanaDate()
