@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using GraceChurchKelseyvilleAwana.Models;
+using GraceChurchKelseyvilleAwana.Email;
 
 namespace GraceChurchKelseyvilleAwana.Controllers
 {
@@ -31,14 +32,17 @@ namespace GraceChurchKelseyvilleAwana.Controllers
             return RedirectToAction("Index", new { @confirm = true });
         }
 
+        //TODO: Add full implementation
         private void EmailStudents(EmailViewModel vm)
         {
+            EmailHelper.SendEmail(vm.EmailBody, null);
             
         }
 
+        //TODO: Add full implementation
         private void EmailLeaders(EmailViewModel vm)
         {
-            
+            EmailHelper.SendEmail(vm.EmailBody, null);
         }
 	}
 }
