@@ -41,8 +41,7 @@ namespace GraceChurchKelseyvilleAwana.Controllers
         [HttpPost]
         public ActionResult Index(FormCollection form)
         {
-            var e = form.GetValue("attendances");
-            var f = form.GetValues(0);
+            var attendanceList = form.GetValues(0);
             var students = db.Students.OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
             var i = 0;
 
@@ -50,7 +49,7 @@ namespace GraceChurchKelseyvilleAwana.Controllers
             {
                 foreach(var attendance in student.Attendances.OrderByDescending(a => a.AttendanceDate))
                 {
-                    var attended = bool.Parse(f.ElementAt(i++));
+                    var attended = bool.Parse(attendanceList.ElementAt(i++));
                     if (attended)
                     {
                         i++;
