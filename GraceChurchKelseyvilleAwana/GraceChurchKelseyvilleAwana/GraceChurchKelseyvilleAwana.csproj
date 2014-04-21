@@ -217,6 +217,7 @@
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AttendanceController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Global.asax.cs">
@@ -258,6 +259,7 @@
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>AwanaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmailViewModel.cs" />
     <Compile Include="Models\Student.cs">
       <DependentUpon>AwanaModel.tt</DependentUpon>
     </Compile>
@@ -354,6 +356,7 @@
     <Content Include="Views\Student\Edit.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Attendance\Index.cshtml" />
+    <Content Include="Views\Email\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

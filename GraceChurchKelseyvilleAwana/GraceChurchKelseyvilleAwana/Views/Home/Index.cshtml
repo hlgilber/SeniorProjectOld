@@ -23,16 +23,18 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <p class="navbar-brand" data-bind="if: !loggedIn()">Grace Church Kelseyville Awana</p>
+                    <!--<p class="navbar-brand" data-bind="if: !loggedIn()">Grace Church Kelseyville Awana</p>-->
+                    @Html.ActionLink("Grace Church Kelseyville Awana", "Index", "Home", null, new { @class = "navbar-brand"})
                     <!--<a href="#" class="navbar-brand" data-bind="if: loggedIn, click: navigateToHome">Application Name</a>-->
                 </div>
                 <div data-bind="if: loggedIn" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        @Html.ActionLink("Grace Church Kelseyville Awana", "Index", "Home", null, new { @class = "navbar-brand" })
+                        <!--@Html.ActionLink("Grace Church Kelseyville Awana", "Index", "Home", null, new { @class = "navbar-brand" })-->
                         <li><a href="#" data-bind="click: navigateToHome">Home</a></li>
                         <!--<li>@Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, null)</li>-->
                         <li>@Html.ActionLink("Students", "Index", "Student")</li>
                         <li>@Html.ActionLink("Attendance", "Index", "Attendance")</li>
+                        <li>@Html.ActionLink("Emailing", "Index", "Email")</li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right" data-bind="with: user">
                         <li>
