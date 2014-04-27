@@ -7,19 +7,54 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GraceChurchKelseyvilleAwana.Models;
+using PagedList;
 
 namespace GraceChurchKelseyvilleAwana.Controllers
 {
     public class StudentController : Controller
     {
         private Entities db = new Entities();
+        private const int STUDENT_PAGE_SIZE = 2;
 
         // GET: /Student/
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, Int32? page)
         {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            var students = from s in db.Students select s;
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                students = students.Where(s => s.LastName.ToUpper().Contains(searchString.ToUpper())
+                    || s.FirstName.ToUpper().Contains(searchString.ToUpper()));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    students = students.OrderByDescending(s => s.LastName).ThenBy(s => s.FirstName);
+                    break;
+                default:
+                    students = students.OrderBy(s => s.LastName).ThenBy(s => s.FirstName);
+                    break;
+            }
+
+            int pageSize = STUDENT_PAGE_SIZE;
+
             //If not logged in do this:
             //return RedirectToAction("Index", "Home");
-            return View(db.Students.ToList());
+            return View(students.ToPagedList((page ?? 1), pageSize));
         }
 
         // GET: /Student/Details/5

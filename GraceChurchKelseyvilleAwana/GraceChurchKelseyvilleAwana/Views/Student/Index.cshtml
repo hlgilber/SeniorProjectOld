@@ -1,47 +1,58 @@
-﻿@model IEnumerable<GraceChurchKelseyvilleAwana.Models.Student>
+﻿@model PagedList.IPagedList<GraceChurchKelseyvilleAwana.Models.Student>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Students";
 }
 
-<h2>Index</h2>
+<h2>Students</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@using (Html.BeginForm("Index", "Student", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter=ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().FirstName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BirthDate)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().BirthDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Age)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Age)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Grade)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Grade)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Gender)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Gender)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MedicalInformation)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().MedicalInformation)
         </th>
-        <th></th>
     </tr>
 
-@foreach (var item in Model.OrderBy(x => x.LastName).ThenBy(x => x.FirstName)) {
+@foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.BirthDate)
@@ -67,3 +78,8 @@
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
